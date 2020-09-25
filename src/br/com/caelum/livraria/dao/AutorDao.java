@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import br.com.caelum.livraria.modelo.Autor;
 
 @Stateless
+//@Interceptors({LogInterceptador.class})
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class AutorDao {
 
@@ -25,7 +26,7 @@ public class AutorDao {
 		System.out.println("AutorDao foi criado!");
 	}
 	
-	@TransactionAttribute(TransactionAttributeType.MANDATORY)
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void salva(Autor autor) {
 		
 		System.out.println("Salvando autor " + autor.getNome());
@@ -33,6 +34,8 @@ public class AutorDao {
 		manager.persist(autor);
 		
 		System.out.println("salvou Autor " + autor.getNome());
+		
+//		throw new RuntimeException("Serviço externo deu erro!");
 	}
 	
 	public List<Autor> todosAutores() {
